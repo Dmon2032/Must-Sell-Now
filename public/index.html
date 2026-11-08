@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Must Sell NOW! | Cosmic Filaments</title>
+<meta name="theme-color" content="#0a0716">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --void:#0a0716; --deep:#150f33; --panel:#1b1442; --panel2:#241a55;
+  --line:#3b2f7a; --text:#f2eeff; --muted:#a79fd0;
+  --fil:#7c5cff; --cyan:#5ee7ff; --hot:#ff4f8b; --hot2:#ff8a5c;
+  --good:#6dffb0; --warn:#ffd166;
+  --display:'Unbounded','Arial Black',system-ui,sans-serif;
+  --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    color-scheme: light;
+    --void:#f4f1ff; --deep:#ebe6ff; --panel:#ffffff; --panel2:#f0ebff;
+    --line:#cfc4ff; --text:#1a1238; --muted:#5d5490;
+    --fil:#5a3df0; --cyan:#0a8fb0; --hot:#e0236a; --hot2:#e0602b;
+    --good:#0b8a4f; --warn:#9a6a00;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--void); color:var(--text); font-family:var(--body); font-size:16px; line-height:1.5;
+  -webkit-text-size-adjust:100%; min-height:100vh; overflow-x:hidden;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+}
+#web{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
+.wrap{position:relative; z-index:1; max-width:620px; margin:0 auto; padding:18px 18px 70px}
+button,input,textarea{font:inherit; color:inherit}
+:focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:8px}
+
+.mast{display:flex; align-items:center; gap:10px; padding:4px 0 14px}
+.mast .co{font-family:var(--display); font-weight:500; font-size:12px; letter-spacing:.14em; color:var(--cyan)}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(38px,12vw,68px); line-height:.95; margin:2px 0 10px; letter-spacing:-.02em;
+  background:linear-gradient(100deg,var(--hot),var(--hot2) 45%,var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.lede{color:var(--muted); margin:0 0 20px; font-size:16.5px}
+
+.panel{background:linear-gradient(180deg,var(--panel),var(--deep)); border:1px solid var(--line); border-radius:20px; padding:18px}
+.panel + .panel{margin-top:14px}
+h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
+
+.drop{border:1.5px dashed var(--fil); border-radius:16px; padding:20px 12px; text-align:center; background:radial-gradient(120% 140% at 50% 0%,rgba(124,92,255,.18),transparent 70%)}
+.drop.over{border-color:var(--cyan)}
+.btnrow{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+.btn{appearance:none; border:1px solid var(--line); background:var(--panel2); padding:12px 18px; border-radius:14px; font-weight:600; cursor:pointer; min-height:46px; display:inline-flex; align-items:center; justify-content:center; gap:8px}
+.btn:hover{border-color:var(--fil)}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.45; cursor:not-allowed}
+.btn.primary{background:linear-gradient(100deg,var(--hot),var(--hot2)); border-color:transparent; color:#1a0612; font-family:var(--display); font-weight:800; font-size:15px; min-height:54px; width:100%; box-shadow:0 8px 28px rgba(255,79,139,.32)}
+.btn.small{min-height:36px; padding:7px 12px; font-size:14px; border-radius:11px}
+.btn.ghost{background:transparent}
+.thumbs{display:flex; gap:10px; margin-top:12px; justify-content:center; flex-wrap:wrap}
+.thumb{position:relative; width:78px; height:78px; border-radius:12px; overflow:hidden; border:1px solid var(--line)}
+.thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.thumb button{position:absolute; top:3px; right:3px; width:24px; height:24px; border-radius:50%; border:0; background:rgba(10,7,22,.8); color:#fff; cursor:pointer; line-height:1}
+.field{width:100%; margin-top:14px; background:var(--void); border:1px solid var(--line); border-radius:12px; padding:11px 13px}
+.go{margin-top:14px}
+.status{margin:10px 0 0; font-size:14px; color:var(--muted); min-height:1.3em}
+.status.err{color:var(--warn)}
+#passRow{display:none}
+
+.scan{display:none; text-align:center; padding:26px 10px}
+.scan.on{display:block}
+.scan svg{width:130px; height:130px; display:block; margin:0 auto 6px}
+.scan .fil{stroke-dasharray:140; animation:flow 2.4s linear infinite}
+.scan .fil:nth-child(3){animation-delay:-.8s}
+.scan .fil:nth-child(4){animation-delay:-1.6s}
+@keyframes flow{to{stroke-dashoffset:-280}}
+.scan .msg{font-family:var(--display); font-weight:500; font-size:15px; min-height:1.5em; margin-bottom:4px}
+.scan .sub{color:var(--muted); font-size:13.5px; margin-bottom:12px}
+
+#result{display:none}
+#result.on{display:block}
+.top{display:grid; grid-template-columns:112px 1fr; gap:14px; align-items:start}
+.top img{width:112px; height:112px; object-fit:cover; border-radius:14px; border:1px solid var(--line)}
+.top h3{margin:0 0 6px; font-family:var(--display); font-weight:500; font-size:18px; line-height:1.25}
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:999px; border:1px solid var(--line); background:var(--panel2)}
+.chip.good{color:var(--good); border-color:var(--good)}
+.chip.warn{color:var(--warn); border-color:var(--warn)}
+
+.matrix{padding:16px 12px 16px}
+.track{height:54px; margin-bottom:2px}
+.track svg{width:100%; height:100%; overflow:visible}
+.cols{display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:6px; text-align:center}
+.lab{font-size:13px; color:var(--muted)}
+.val{font-family:var(--display); font-weight:500; font-size:clamp(17px,5vw,22px)}
+.mid .lab{color:var(--text); font-weight:600}
+.mid .val{font-weight:800; font-size:clamp(28px,9vw,42px); color:var(--hot); text-shadow:0 0 22px rgba(255,79,139,.4)}
+.sub2{font-size:12.5px; color:var(--muted)}
+.proof{margin:14px 0 0; text-align:center}
+
+.comps{margin:0; padding:0; list-style:none}
+.comps li{display:flex; gap:10px; justify-content:space-between; align-items:baseline; padding:8px 0; border-top:1px solid var(--line); font-size:14.5px}
+.comps li:first-child{border-top:0}
+.comps a{color:var(--cyan); text-decoration:none}
+.comps a:hover{text-decoration:underline}
+.comps .p{font-family:var(--display); font-weight:500; white-space:nowrap}
+.comps .k{font-size:12px; color:var(--muted)}
+
+.sell{display:flex; gap:12px; align-items:flex-start}
+.sell .badge{flex:none; width:46px; height:46px; border-radius:13px; display:grid; place-items:center; background:linear-gradient(140deg,var(--fil),var(--cyan)); color:#0a0716; font-family:var(--display); font-weight:800; font-size:19px}
+.sell h3{margin:0; font-family:var(--display); font-weight:500; font-size:17px}
+.sell p{margin:3px 0 0; font-size:15px}
+
+.listing{background:var(--void); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-line}
+.listing .t{font-weight:600; font-size:17px; margin-bottom:8px; white-space:normal}
+.listing .i{color:var(--muted); font-size:14.5px; margin-bottom:8px}
+.heads{border-left:3px solid var(--warn); padding:8px 12px; margin-top:12px; font-size:14px; background:rgba(255,209,102,.07); border-radius:0 10px 10px 0}
+.actions{display:grid; gap:10px; margin-top:14px}
+.fine{font-size:12.5px; color:var(--muted); margin:16px 0 0}
+.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,20px); background:var(--panel2); border:1px solid var(--cyan); padding:10px 16px; border-radius:12px; font-size:14px; opacity:0; transition:opacity .2s,transform .2s; z-index:10; pointer-events:none}
+.toast.on{opacity:1; transform:translate(-50%,0)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion: reduce){ .scan .fil{animation:none} .toast,.btn{transition:none} }
+</style>
+</head>
+<body>
+<canvas id="web" aria-hidden="true"></canvas>
+<main class="wrap">
+
+  <div class="mast">
+    <svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true">
+      <path d="M5 26 C 12 20, 14 12, 17 7 S 24 20, 29 9" fill="none" stroke="#7c5cff" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M5 26 C 14 27, 22 24, 29 9" fill="none" stroke="#5ee7ff" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>
+      <circle cx="5" cy="26" r="3" fill="#5ee7ff"/><circle cx="17" cy="7" r="3.4" fill="#ff4f8b"/><circle cx="29" cy="9" r="3" fill="#7c5cff"/>
+    </svg>
+    <span class="co">COSMIC FILAMENTS</span>
+  </div>
+  <h1>Must Sell NOW!</h1>
+  <p class="lede">Photo in. Sold-price research, the price that moves it fast, where to sell, and a listing ready to paste.</p>
+
+  <section class="panel" id="capture">
+    <div class="drop" id="drop">
+      <div class="btnrow">
+        <button class="btn" id="btnCam" type="button">Take photo</button>
+        <button class="btn" id="btnPick" type="button">Upload</button>
+      </div>
+      <input class="sr" id="inCam" type="file" accept="image/*" capture="environment" tabindex="-1">
+      <input class="sr" id="inPick" type="file" accept="image/*" multiple tabindex="-1">
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <input class="field" id="note" type="text" maxlength="300" placeholder="Anything you know? (optional)" aria-label="Optional note about the item">
+    <div class="field" id="passRow" style="padding:0; border:0; background:none">
+      <input class="field" id="pass" type="password" placeholder="Passcode" autocomplete="current-password" aria-label="Passcode" style="margin-top:0">
+    </div>
+    <div class="go">
+      <button class="btn primary" id="btnGo" type="button" disabled>Price it to sell</button>
+      <p class="status" id="status" role="status"></p>
+    </div>
+  </section>
+
+  <section class="panel scan" id="scan" aria-live="polite">
+    <svg viewBox="0 0 150 150" aria-hidden="true">
+      <circle cx="75" cy="75" r="62" fill="none" stroke="var(--line)" stroke-width="1"/>
+      <path class="fil" d="M20 100 C 50 40, 80 130, 130 50" fill="none" stroke="#7c5cff" stroke-width="3" stroke-linecap="round"/>
+      <path class="fil" d="M25 55 C 60 100, 90 20, 125 100" fill="none" stroke="#5ee7ff" stroke-width="3" stroke-linecap="round"/>
+      <path class="fil" d="M40 125 C 60 60, 100 90, 112 28" fill="none" stroke="#ff4f8b" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="msg" id="scanMsg">Looking at your photo…</div>
+    <div class="sub">Searching sold listings. About a minute.</div>
+    <button class="btn small ghost" id="btnStop" type="button">Cancel</button>
+  </section>
+
+  <div id="result" aria-live="polite">
+    <section class="panel">
+      <div class="top">
+        <img id="rImg" alt="Your collectible">
+        <div><h3 id="rName"></h3><div class="chips" id="rChips"></div></div>
+      </div>
+    </section>
+
+    <section class="panel matrix" aria-label="Price matrix">
+      <div class="track">
+        <svg viewBox="0 0 600 54" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset=".5" stop-color="#ff4f8b"/><stop offset="1" stop-color="#5ee7ff"/></linearGradient>
+            <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <path d="M50 30 C 150 4, 230 50, 300 28 S 460 8, 550 30" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+          <circle cx="300" cy="28" r="15" fill="#ff4f8b" opacity=".55" filter="url(#gl)"/>
+          <circle cx="50" cy="30" r="6" fill="#7c5cff"/><circle cx="300" cy="28" r="10" fill="#ff4f8b"/><circle cx="550" cy="30" r="6" fill="#5ee7ff"/>
+        </svg>
+      </div>
+      <div class="cols">
+        <div><div class="lab">Floor</div><div class="val" id="pLow"></div></div>
+        <div class="mid"><div class="lab">Must-sell price</div><div class="val" id="pQuick"></div><div class="sub2" id="pDays"></div></div>
+        <div><div class="lab">Ceiling</div><div class="val" id="pHigh"></div></div>
+      </div>
+      <p class="proof"><span class="chip" id="proof"></span></p>
+    </section>
+
+    <section class="panel" id="compsPanel">
+      <h2>Sold prices found</h2>
+      <ul class="comps" id="comps"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Sell it here</h2>
+      <div class="sell"><div class="badge" id="platBadge"></div><div><h3 id="platName"></h3><p id="platWhy"></p><p class="sub2" id="platNet"></p></div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Listing</h2>
+      <div class="listing"><div class="t" id="lTitle"></div><div class="i" id="lInfo"></div><div id="lDesc"></div></div>
+      <div class="heads" id="heads" style="display:none"></div>
+      <div class="actions">
+        <button class="btn" id="btnCopy" type="button">Copy listing</button>
+        <button class="btn" id="btnPdf" type="button">Save one-page PDF</button>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin-top:14px"><button class="btn ghost" id="btnAgain" type="button">Price another piece</button></div>
+  </div>
+
+  <p class="fine">Estimates, not appraisals. Prices come from sold listings found by web search and an AI read of your photos, and can be wrong for rare, signed or reproduced items. Check the links before you commit.</p>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const state = { photos: [], result: null, polling: false };
+  const MAX = 3;
+
+  /* background filaments */
+  function drawWeb(){
+    const c = $('web'), dpr = Math.min(devicePixelRatio || 1, 2), w = c.clientWidth, h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr;
+    const x = c.getContext('2d'); x.scale(dpr, dpr);
+    let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    const n = Math.round(w * h / 24000) + 12, pts = [];
+    for (let i = 0; i < n; i++) pts.push([rnd() * w, rnd() * h, rnd()]);
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+      const dx = pts[i][0] - pts[j][0], dy = pts[i][1] - pts[j][1], d = Math.hypot(dx, dy);
+      if (d < 170) { x.strokeStyle = (pts[i][2] > .6 ? 'rgba(94,231,255,' : 'rgba(124,92,255,') + (.2 * (1 - d / 170)) + ')'; x.beginPath(); x.moveTo(pts[i][0], pts[i][1]); x.quadraticCurveTo((pts[i][0] + pts[j][0]) / 2 + dy * .12, (pts[i][1] + pts[j][1]) / 2 - dx * .12, pts[j][0], pts[j][1]); x.stroke(); }
+    }
+    for (const p of pts) { x.fillStyle = p[2] > .85 ? 'rgba(255,79,139,.7)' : 'rgba(167,159,208,.4)'; x.beginPath(); x.arc(p[0], p[1], p[2] > .85 ? 2.4 : 1.3, 0, 6.3); x.fill(); }
+  }
+  drawWeb(); let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawWeb, 200); });
+
+  const toast = m => { const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2000); };
+  const money = n => { n = Number(n); return !isFinite(n) ? '—' : n >= 100 ? '$' + Math.round(n).toLocaleString('en-US') : '$' + n.toFixed(2); };
+  const slug = s => String(s || 'item').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'item';
+  const setStatus = (m, err) => { const s = $('status'); s.textContent = m || ''; s.classList.toggle('err', !!err); };
+  const store = { get: k => { try { return sessionStorage.getItem(k) || ''; } catch { return ''; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} } };
+
+  /* photos */
+  async function shrink(file, max = 1280) {
+    const url = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+      const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const w = Math.round(img.naturalWidth * k), h = Math.round(img.naturalHeight * k);
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      return { dataUrl: c.toDataURL('image/jpeg', 0.82), w, h };
+    } finally { URL.revokeObjectURL(url); }
+  }
+  function renderThumbs() {
+    const box = $('thumbs'); box.innerHTML = '';
+    state.photos.forEach((p, i) => {
+      const d = document.createElement('div'); d.className = 'thumb';
+      d.innerHTML = '<img alt="Photo ' + (i + 1) + '"><button type="button" aria-label="Remove photo ' + (i + 1) + '">×</button>';
+      d.querySelector('img').src = p.dataUrl;
+      d.querySelector('button').onclick = () => { state.photos.splice(i, 1); renderThumbs(); refreshGo(); };
+      box.appendChild(d);
+    });
+  }
+  const refreshGo = () => { $('btnGo').disabled = !state.photos.length; };
+  async function addFiles(list) {
+    const files = [...list].filter(f => f.type.startsWith('image/'));
+    if (!files.length) { setStatus('That doesn’t look like a photo.', true); return; }
+    setStatus('');
+    for (const f of files) {
+      if (state.photos.length >= MAX) { toast('Max ' + MAX + ' photos'); break; }
+      try { state.photos.push(await shrink(f)); } catch { setStatus('One photo couldn’t be read.', true); }
+    }
+    renderThumbs(); refreshGo();
+  }
+  $('btnCam').onclick = () => $('inCam').click();
+  $('btnPick').onclick = () => $('inPick').click();
+  $('inCam').onchange = e => { addFiles(e.target.files); e.target.value = ''; };
+  $('inPick').onchange = e => { addFiles(e.target.files); e.target.value = ''; };
+  const drop = $('drop');
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+  $('pass').value = store.get('msn_pass');
+
+  /* run + poll */
+  const MSGS = ['Looking at your photo…', 'Searching sold listings…', 'Comparing sales…', 'Setting the must-sell price…', 'Writing the listing…'];
+  let msgTimer = null, pollTimer = null, runToken = 0;
+  function showScan(on) {
+    $('scan').classList.toggle('on', on); $('capture').style.display = on ? 'none' : '';
+    clearInterval(msgTimer);
+    if (on) { let i = 0; $('scanMsg').textContent = MSGS[0]; msgTimer = setInterval(() => { i = Math.min(i + 1, MSGS.length - 1); $('scanMsg').textContent = MSGS[i]; }, 9000); $('scan').scrollIntoView({ block: 'start' }); }
+  }
+  function fail(msg) { showScan(false); setStatus(msg, true); $('capture').scrollIntoView({ block: 'start' }); }
+
+  async function run() {
+    if (!state.photos.length) return;
+    const token = ++runToken; setStatus(''); showScan(true);
+    try {
+      const r = await fetch('/.netlify/functions/start', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-passcode': $('pass').value },
+        body: JSON.stringify({ photos: state.photos.map(p => p.dataUrl), note: $('note').value.trim() }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.status === 401) { $('passRow').style.display = 'block'; $('pass').focus(); return fail('Enter the passcode to continue.'); }
+      if (!r.ok) return fail(j.error || 'Couldn’t start. Try again.');
+      store.set('msn_pass', $('pass').value);
+      poll(j.id, token, Date.now());
+    } catch { fail('Couldn’t reach the server. Check your connection and try again.'); }
+  }
+  function poll(id, token, t0) {
+    clearTimeout(pollTimer);
+    pollTimer = setTimeout(async () => {
+      if (token !== runToken) return;
+      try {
+        const r = await fetch('/.netlify/functions/status?id=' + encodeURIComponent(id), { cache: 'no-store' });
+        const j = await r.json().catch(() => ({}));
+        if (token !== runToken) return;
+        if (j.status === 'done') { state.result = j.result; showScan(false); render(); return; }
+        if (j.status === 'error') return fail(j.message || 'Something went wrong. Try again.');
+        if (Date.now() - t0 > 6 * 60 * 1000) return fail('That took too long. Try again.');
+      } catch { /* transient network blip: keep polling */ }
+      poll(id, token, t0);
+    }, 2500);
+  }
+  $('btnGo').onclick = run;
+  $('btnStop').onclick = () => { runToken++; clearTimeout(pollTimer); showScan(false); setStatus('Cancelled.'); };
+
+  /* render */
+  function listingText() {
+    const l = state.result.listing;
+    return [l.title, '', ...l.info, '', l.description].join('\n').trim();
+  }
+  function render() {
+    const r = state.result, p = r.prices;
+    $('rImg').src = state.photos[0].dataUrl;
+    $('rName').textContent = r.item.name;
+    const chips = [];
+    if (r.condition) chips.push('<span class="chip">' + esc(r.condition) + '</span>');
+    chips.push('<span class="chip ' + (r.confidence === 'high' ? 'good' : r.confidence === 'low' ? 'warn' : '') + '">ID: ' + esc(r.confidence) + '</span>');
+    $('rChips').innerHTML = chips.join('');
+    $('pLow').textContent = money(p.low); $('pQuick').textContent = money(p.quick); $('pHigh').textContent = money(p.high);
+    $('pDays').textContent = 'about ' + p.days + ' days';
+    const pr = $('proof');
+    if (r.soldCount >= 3) { pr.textContent = 'Backed by ' + r.soldCount + ' sold listings'; pr.className = 'chip good'; }
+    else if (r.comps.length) { pr.textContent = 'Only ' + r.soldCount + ' sold comps found. Treat as an estimate'; pr.className = 'chip warn'; }
+    else { pr.textContent = 'No comps found. AI estimate only'; pr.className = 'chip warn'; }
+    $('compsPanel').style.display = r.comps.length ? '' : 'none';
+    $('comps').innerHTML = r.comps.map(c => '<li><span><a href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer">' + esc(c.title || c.source || 'Listing') + '</a><br><span class="k">' + esc(c.source) + ' · ' + (c.kind === 'sold' ? 'sold' : 'asking price') + '</span></span><span class="p">' + money(c.price) + '</span></li>').join('');
+    $('platBadge').textContent = r.platform.name.charAt(0).toUpperCase();
+    $('platName').textContent = r.platform.name; $('platWhy').textContent = r.platform.why;
+    $('platNet').textContent = r.platform.fee ? 'After about ' + r.platform.fee + '% fees, the must-sell price nets roughly ' + money(p.quick * (1 - r.platform.fee / 100)) + ' before shipping.' : '';
+    $('lTitle').textContent = r.listing.title; $('lInfo').textContent = r.listing.info.join('\n'); $('lDesc').textContent = r.listing.description;
+    const h = $('heads'); h.style.display = r.headsUp ? '' : 'none'; h.textContent = r.headsUp;
+    $('result').classList.add('on'); $('result').scrollIntoView({ block: 'start' });
+  }
+
+  /* copy */
+  $('btnCopy').onclick = async () => {
+    const t = listingText();
+    try { await navigator.clipboard.writeText(t); toast('Listing copied ✓'); }
+    catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); toast('Listing copied ✓'); } catch { toast('Couldn’t copy'); } a.remove(); }
+  };
+
+  /* one-page PDF */
+  const ascii = s => String(s ?? '').replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-').replace(/[^\x20-\x7E\n]/g, '');
+  $('btnPdf').onclick = () => {
+    if (!window.jspdf) { toast('PDF tool didn’t load. Use Copy listing.'); return; }
+    try {
+      const { jsPDF } = window.jspdf, doc = new jsPDF({ unit: 'pt', format: 'letter' });
+      const r = state.result, p = r.prices, ph = state.photos[0];
+      const W = 612, H = 792, M = 40, CW = W - M * 2;
+      const wrap = (t, w, size) => { doc.setFontSize(size); return doc.splitTextToSize(ascii(t), w); };
+
+      // header
+      doc.setFillColor(12, 8, 30); doc.rect(0, 0, W, 74, 'F'); doc.setFillColor(255, 79, 139); doc.rect(0, 74, W, 3, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(26); doc.setTextColor(242, 238, 255); doc.text('MUST SELL NOW!', M, 46);
+      doc.setFontSize(8.5); doc.setTextColor(94, 231, 255); doc.text('COSMIC FILAMENTS  |  PRICING MATRIX', M, 62);
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(167, 159, 208);
+      doc.text(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }), W - M, 62, { align: 'right' });
+
+      // photo + label
+      let y = 98; const bw = 292, bh = 262, k = Math.min(bw / ph.w, bh / ph.h), iw = ph.w * k, ih = ph.h * k;
+      doc.addImage(ph.dataUrl, 'JPEG', M, y, iw, ih);
+      doc.setFillColor(36, 26, 85); doc.rect(M, y + ih, iw, 22, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.setTextColor(255, 255, 255);
+      const lab = ascii('PHOTO: ' + r.item.name + (r.condition ? '  |  ' + r.condition : ''));
+      doc.text(doc.splitTextToSize(lab, iw - 14)[0], M + 7, y + ih + 14.5);
+
+      // prices
+      const rx = M + bw + 20, rw = W - M - rx; let ry = y;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('FLOOR', rx, ry + 10);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(20, 14, 40); doc.text(money(p.low), rx, ry + 32); ry += 46;
+      doc.setFillColor(255, 79, 139); doc.roundedRect(rx, ry, rw, 70, 8, 8, 'F');
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(255, 255, 255); doc.text('MUST-SELL PRICE', rx + rw / 2, ry + 17, { align: 'center' });
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(28); doc.text(money(p.quick), rx + rw / 2, ry + 48, { align: 'center' });
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.text('about ' + p.days + ' days', rx + rw / 2, ry + 63, { align: 'center' }); ry += 84;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('CEILING', rx, ry + 10);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(20, 14, 40); doc.text(money(p.high), rx, ry + 32); ry += 50;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('SELL ON', rx, ry);
+      doc.setFontSize(12); doc.setTextColor(20, 14, 40); doc.text(ascii(r.platform.name), rx, ry + 15);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(60, 52, 100);
+      wrap(r.platform.why, rw, 9).slice(0, 4).forEach((l, i) => doc.text(l, rx, ry + 29 + i * 11));
+
+      // listing box (plain text, selectable, paste-ready)
+      y += Math.max(ih + 22, 260) + 22;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(90, 61, 240); doc.text('LISTING  -  COPY AND PASTE', M, y); y += 8;
+      const tl = wrap(r.listing.title, CW - 28, 14), il = r.listing.info.flatMap(s => wrap(s, CW - 28, 10.5)), dl = wrap(r.listing.description, CW - 28, 10.5);
+      const boxH = 18 + tl.length * 18 + 6 + il.length * 14 + 8 + dl.length * 14 + 12;
+      doc.setDrawColor(124, 92, 255); doc.setLineWidth(1); doc.setFillColor(247, 245, 255); doc.roundedRect(M, y, CW, boxH, 8, 8, 'FD');
+      let ly = y + 24; doc.setTextColor(20, 14, 40);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(14); tl.forEach(l => { doc.text(l, M + 14, ly); ly += 18; }); ly += 2;
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5); doc.setTextColor(70, 62, 110); il.forEach(l => { doc.text(l, M + 14, ly); ly += 14; }); ly += 8;
+      doc.setTextColor(20, 14, 40); dl.forEach(l => { doc.text(l, M + 14, ly); ly += 14; });
+      y += boxH + 18;
+
+      // price evidence
+      if (r.comps.length) {
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(90, 61, 240); doc.text('PRICE EVIDENCE', M, y); y += 13;
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+        r.comps.slice(0, 4).forEach(c => {
+          if (y > H - 46) return;
+          const line = ascii(money(c.price) + (c.kind === 'sold' ? ' sold' : ' asking') + '  -  ' + (c.source || '') + '  -  ' + c.title);
+          doc.setTextColor(10, 143, 176); doc.textWithLink(doc.splitTextToSize(line, CW)[0], M, y, { url: c.url }); y += 12.5;
+        });
+      }
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(120, 112, 160);
+      doc.text('Estimate based on web search of sold listings, not a formal appraisal. Cosmic Filaments | Must Sell NOW!', M, H - 22);
+
+      const blob = doc.output('blob'), url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = 'must-sell-now-' + slug(r.item.name) + '.pdf'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000); toast('PDF saved ✓');
+    } catch (e) { toast('PDF failed. Use Copy listing.'); }
+  };
+
+  $('btnAgain').onclick = () => {
+    state.photos = []; state.result = null; renderThumbs(); $('note').value = ''; setStatus(''); refreshGo();
+    $('result').classList.remove('on'); $('capture').style.display = ''; $('capture').scrollIntoView({ block: 'start' });
+  };
+})();
+</script>
+</body>
+</html>
