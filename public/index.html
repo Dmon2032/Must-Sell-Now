@@ -4,157 +4,231 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Must Sell NOW! | Cosmic Filaments</title>
-<meta name="theme-color" content="#0a0716">
+<meta name="description" content="Snap a photo. Get the price that moves it fast, the best place to sell it, and a listing ready to paste.">
+<meta name="theme-color" content="#0D1B2A">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/brand/glyph.png">
+<meta name="author" content="Cosmic Filaments">
+<meta name="copyright" content="Copyright Cosmic Filaments. All rights reserved.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Archivo+Black&display=swap" rel="stylesheet">
 <style>
+/* Cosmic Filaments brand book, vol. 1: nine colors, three faces. */
 :root{
   color-scheme: dark;
-  --void:#0a0716; --deep:#150f33; --panel:#1b1442; --panel2:#241a55;
-  --line:#3b2f7a; --text:#f2eeff; --muted:#a79fd0;
-  --fil:#7c5cff; --cyan:#5ee7ff; --hot:#ff4f8b; --hot2:#ff8a5c;
-  --good:#6dffb0; --warn:#ffd166;
-  --display:'Unbounded','Arial Black',system-ui,sans-serif;
-  --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-}
-@media (prefers-color-scheme: light){
-  :root{
-    color-scheme: light;
-    --void:#f4f1ff; --deep:#ebe6ff; --panel:#ffffff; --panel2:#f0ebff;
-    --line:#cfc4ff; --text:#1a1238; --muted:#5d5490;
-    --fil:#5a3df0; --cyan:#0a8fb0; --hot:#e0236a; --hot2:#e0602b;
-    --good:#0b8a4f; --warn:#9a6a00;
-  }
+  --navy:#0D1B2A;      /* Deep Space Navy: every page, every panel */
+  --void:#071019;      /* Void Black: recessed panels */
+  --cream:#E8D5A3;     /* Filament Cream: primary text */
+  --paper:#F0E6C8;     /* Paper Light: high-emphasis text */
+  --rust:#B5451B;      /* Rust Orange: energy accent, primary CTA */
+  --rust-hi:#D0592B;   /* Rust Raised: hover, lighter energy */
+  --rust-lo:#8A3413;   /* Rust Recessed: depth threads */
+  --gold:#D4A853;      /* Solar Gold: highlight and detail */
+  --teal:#5B9AA9;      /* Signal Teal: rare. Not used in this app. */
+  --soft:rgba(232,213,163,.66);
+  --faint:rgba(232,213,163,.5);
+  --edge:rgba(232,213,163,.16);
+  --display:'Archivo Black','Arial Black',Impact,sans-serif;
+  --ui:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --body:Georgia,'Times New Roman',serif;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{
-  margin:0; background:var(--void); color:var(--text); font-family:var(--body); font-size:16px; line-height:1.5;
-  -webkit-text-size-adjust:100%; min-height:100vh; overflow-x:hidden;
+  margin:0; min-height:100vh; overflow-x:hidden; color:var(--cream); font-family:var(--body); font-size:16px; line-height:1.75;
+  background:
+    radial-gradient(1100px 640px at 12% -8%, #12263b 0%, transparent 62%),
+    radial-gradient(900px 600px at 100% 100%, #071019 0%, transparent 70%),
+    var(--navy);
+  background-attachment:fixed;
+  -webkit-text-size-adjust:100%;
   padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
 }
-#web{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
-.wrap{position:relative; z-index:1; max-width:620px; margin:0 auto; padding:18px 18px 70px}
 button,input,textarea{font:inherit; color:inherit}
-:focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:8px}
+:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:8px}
 
-.mast{display:flex; align-items:center; gap:10px; padding:4px 0 14px}
-.mast .co{font-family:var(--display); font-weight:500; font-size:12px; letter-spacing:.14em; color:var(--cyan)}
-h1{
-  font-family:var(--display); font-weight:800; font-size:clamp(38px,12vw,68px); line-height:.95; margin:2px 0 10px; letter-spacing:-.02em;
-  background:linear-gradient(100deg,var(--hot),var(--hot2) 45%,var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.lede{color:var(--muted); margin:0 0 20px; font-size:16.5px}
+/* sky: staggered twinkle, one comet per load */
+#sky{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+.dot{position:absolute; width:2px; height:2px; border-radius:50%; background:var(--cream); animation:twinkle 3s ease-in-out infinite}
+.spark{position:absolute; background:var(--gold); clip-path:polygon(50% 0,59% 41%,100% 50%,59% 59%,50% 100%,41% 59%,0 50%,41% 41%); animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.18} 50%{opacity:.85}}
+.comet{position:absolute; top:0; left:0; width:110px; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,var(--gold),var(--rust-hi) 40%,transparent);
+  transform:translate(105vw,-6vh) rotate(-31deg); animation:pass 9s linear 2.5s 1 both}
+@keyframes pass{from{transform:translate(105vw,-6vh) rotate(-31deg)} to{transform:translate(-20vw,62vh) rotate(-31deg)}}
 
-.panel{background:linear-gradient(180deg,var(--panel),var(--deep)); border:1px solid var(--line); border-radius:20px; padding:18px}
+.wrap{position:relative; z-index:1; max-width:620px; margin:0 auto; padding:44px 18px 70px}
+
+/* masthead */
+.eye{font-family:var(--ui); font-weight:700; font-size:10.5px; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin:0}
+h1{font-family:var(--display); font-weight:400; font-size:clamp(42px,12.5vw,62px); line-height:.94; letter-spacing:-.005em; margin:8px 0 14px; color:var(--paper); text-transform:uppercase}
+.lede{margin:0 0 22px; font-size:16.5px; line-height:1.8; color:var(--cream)}
+.lede b{color:var(--paper)}
+
+/* panels: recessed, a half-step behind the navy */
+.panel{background:var(--void); border:1px solid var(--edge); border-radius:16px; padding:18px}
 .panel + .panel{margin-top:14px}
-h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
+.panel > .eye{margin-bottom:12px}
 
-.drop{border:1.5px dashed var(--fil); border-radius:16px; padding:20px 12px; text-align:center; background:radial-gradient(120% 140% at 50% 0%,rgba(124,92,255,.18),transparent 70%)}
-.drop.over{border-color:var(--cyan)}
+.drop{border:1.5px dashed rgba(208,89,43,.7); border-radius:14px; padding:20px 12px; text-align:center; background:radial-gradient(120% 140% at 50% 0%, rgba(181,69,27,.14), transparent 70%)}
+.drop.over{border-color:var(--gold)}
 .btnrow{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
-.btn{appearance:none; border:1px solid var(--line); background:var(--panel2); padding:12px 18px; border-radius:14px; font-weight:600; cursor:pointer; min-height:46px; display:inline-flex; align-items:center; justify-content:center; gap:8px}
-.btn:hover{border-color:var(--fil)}
-.btn:active{transform:scale(.98)}
-.btn[disabled]{opacity:.45; cursor:not-allowed}
-.btn.primary{background:linear-gradient(100deg,var(--hot),var(--hot2)); border-color:transparent; color:#1a0612; font-family:var(--display); font-weight:800; font-size:15px; min-height:54px; width:100%; box-shadow:0 8px 28px rgba(255,79,139,.32)}
-.btn.small{min-height:36px; padding:7px 12px; font-size:14px; border-radius:11px}
-.btn.ghost{background:transparent}
+.btn{appearance:none; border:1px solid rgba(232,213,163,.34); background:transparent; color:var(--cream); padding:12px 18px; border-radius:12px; cursor:pointer; min-height:46px;
+  font-family:var(--ui); font-weight:700; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; transition:border-color .2s, background .2s, color .2s}
+.btn:hover{border-color:var(--rust-hi); color:var(--paper)}
+.btn:active{transform:scale(.985)}
+.btn[disabled]{opacity:.4; cursor:not-allowed}
+.btn.primary{background:var(--rust); border-color:var(--rust); color:var(--paper); min-height:56px; width:100%; font-size:14px; letter-spacing:.18em}
+.btn.primary:hover:not([disabled]){background:var(--rust-hi); border-color:var(--rust-hi)}
+.btn.primary.pulse{animation:breath 3.4s ease-in-out 1 both}
+@keyframes breath{0%{box-shadow:0 0 0 0 rgba(208,89,43,0)} 45%{box-shadow:0 0 0 11px rgba(208,89,43,.26)} 100%{box-shadow:0 0 0 0 rgba(208,89,43,0)}}
+.btn.small{min-height:36px; padding:7px 14px; font-size:11px; border-radius:10px}
 .thumbs{display:flex; gap:10px; margin-top:12px; justify-content:center; flex-wrap:wrap}
-.thumb{position:relative; width:78px; height:78px; border-radius:12px; overflow:hidden; border:1px solid var(--line)}
+.thumb{position:relative; width:78px; height:78px; border-radius:10px; overflow:hidden; border:1px solid var(--edge)}
 .thumb img{width:100%; height:100%; object-fit:cover; display:block}
-.thumb button{position:absolute; top:3px; right:3px; width:24px; height:24px; border-radius:50%; border:0; background:rgba(10,7,22,.8); color:#fff; cursor:pointer; line-height:1}
-.field{width:100%; margin-top:14px; background:var(--void); border:1px solid var(--line); border-radius:12px; padding:11px 13px}
+.thumb button{position:absolute; top:3px; right:3px; width:24px; height:24px; border-radius:50%; border:0; background:rgba(7,16,25,.85); color:var(--paper); cursor:pointer; line-height:1}
+.field{width:100%; margin-top:14px; background:var(--navy); border:1px solid var(--edge); border-radius:10px; padding:11px 13px; font-family:var(--body); font-size:16px}
+.field::placeholder{color:var(--faint)}
 .go{margin-top:14px}
-.status{margin:10px 0 0; font-size:14px; color:var(--muted); min-height:1.3em}
-.status.err{color:var(--warn)}
+.status{margin:10px 0 0; font-size:14.5px; color:var(--soft); min-height:1.4em; font-style:italic}
+.status.err{color:var(--rust-hi); font-style:normal}
 #passRow{display:none}
 
-.scan{display:none; text-align:center; padding:26px 10px}
+/* scan: the web assembles itself */
+.scan{display:none; text-align:center; padding:24px 14px}
 .scan.on{display:block}
-.scan svg{width:130px; height:130px; display:block; margin:0 auto 6px}
-.scan .fil{stroke-dasharray:140; animation:flow 2.4s linear infinite}
-.scan .fil:nth-child(3){animation-delay:-.8s}
-.scan .fil:nth-child(4){animation-delay:-1.6s}
-@keyframes flow{to{stroke-dashoffset:-280}}
-.scan .msg{font-family:var(--display); font-weight:500; font-size:15px; min-height:1.5em; margin-bottom:4px}
-.scan .sub{color:var(--muted); font-size:13.5px; margin-bottom:12px}
+.scan .art{max-width:440px; margin:0 auto 6px}
+.scan .msg{font-family:var(--display); font-size:17px; color:var(--paper); min-height:1.5em; margin:4px 0}
+.scan .sub{color:var(--soft); font-size:14px; margin-bottom:14px}
+
+/* scene (shared by scan + matrix) */
+.scene{display:block; width:100%; height:auto; overflow:visible}
+.scene .th{fill:none; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:0; animation:draw 1.9s cubic-bezier(.3,.6,.3,1) both}
+.scene .th.b{animation-delay:0s} .scene .th.a{animation-delay:.25s} .scene .th.c{animation-delay:.5s}
+@keyframes draw{from{stroke-dashoffset:1}}
+.scene .arr{animation:arrive .9s ease-out both}
+.scene .moon{animation-delay:1.5s} .scene .ring{animation-delay:1.8s} .scene .star{animation-delay:1.2s}
+@keyframes arrive{from{opacity:0; transform:translateY(7px)}}
+.scene .breathe{transform-box:fill-box; transform-origin:center; animation:breathe 5s ease-in-out 2.8s infinite alternate}
+@keyframes breathe{to{transform:scale(1.035)}}
 
 #result{display:none}
 #result.on{display:block}
 .top{display:grid; grid-template-columns:112px 1fr; gap:14px; align-items:start}
-.top img{width:112px; height:112px; object-fit:cover; border-radius:14px; border:1px solid var(--line)}
-.top h3{margin:0 0 6px; font-family:var(--display); font-weight:500; font-size:18px; line-height:1.25}
+.top img{width:112px; height:112px; object-fit:cover; border-radius:12px; border:1px solid var(--edge)}
+.top h3{margin:0 0 8px; font-family:var(--display); font-weight:400; font-size:20px; line-height:1.2; color:var(--paper)}
 .chips{display:flex; gap:6px; flex-wrap:wrap}
-.chip{font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:999px; border:1px solid var(--line); background:var(--panel2)}
-.chip.good{color:var(--good); border-color:var(--good)}
-.chip.warn{color:var(--warn); border-color:var(--warn)}
+.chip{display:inline-block; font-family:var(--ui); font-weight:700; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; line-height:1.4; padding:4px 10px; border-radius:999px; border:1px solid rgba(232,213,163,.3); color:var(--cream)}
+.chip.good{color:var(--gold); border-color:var(--gold)}
+.chip.warn{color:var(--rust-hi); border-color:var(--rust-hi)}
 
-.matrix{padding:16px 12px 16px}
-.track{height:54px; margin-bottom:2px}
-.track svg{width:100%; height:100%; overflow:visible}
-.cols{display:grid; grid-template-columns:1fr 1.3fr 1fr; gap:6px; text-align:center}
-.lab{font-size:13px; color:var(--muted)}
-.val{font-family:var(--display); font-weight:500; font-size:clamp(17px,5vw,22px)}
-.mid .lab{color:var(--text); font-weight:600}
-.mid .val{font-weight:800; font-size:clamp(28px,9vw,42px); color:var(--hot); text-shadow:0 0 22px rgba(255,79,139,.4)}
-.sub2{font-size:12.5px; color:var(--muted)}
+.matrix{padding:16px 12px}
+.track{max-width:540px; margin:0 auto 4px}
+.cols{display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:8px; align-items:center; text-align:center}
+.cols .eye{font-size:9.5px; letter-spacing:.26em}
+.val{font-family:var(--display); font-size:clamp(19px,5.6vw,24px); color:var(--paper); line-height:1.2; margin-top:3px}
+.mid{background:var(--rust); border-radius:12px; padding:12px 6px 11px; color:var(--paper)}
+.mid .eye{color:var(--paper)}
+.mid .val{font-size:clamp(30px,9.5vw,42px); line-height:1.05}
+.sub2{font-size:13px; color:var(--soft); line-height:1.5}
+.mid .sub2{color:var(--paper); opacity:.88; margin-top:3px}
 .proof{margin:14px 0 0; text-align:center}
 
 .comps{margin:0; padding:0; list-style:none}
-.comps li{display:flex; gap:10px; justify-content:space-between; align-items:baseline; padding:8px 0; border-top:1px solid var(--line); font-size:14.5px}
-.comps li:first-child{border-top:0}
-.comps a{color:var(--cyan); text-decoration:none}
-.comps a:hover{text-decoration:underline}
-.comps .p{font-family:var(--display); font-weight:500; white-space:nowrap}
-.comps .k{font-size:12px; color:var(--muted)}
+.comps li{display:flex; gap:12px; justify-content:space-between; align-items:baseline; padding:9px 0; border-top:1px solid var(--edge); font-size:15px; line-height:1.5}
+.comps li:first-child{border-top:0; padding-top:0}
+.comps a{color:var(--gold); text-decoration:underline; text-decoration-color:rgba(212,168,83,.45); text-underline-offset:3px}
+.comps a:hover{color:var(--paper); text-decoration-color:var(--paper)}
+.comps .p{font-family:var(--display); color:var(--paper); white-space:nowrap}
+.comps .k{font-size:12.5px; color:var(--faint); font-style:italic}
 
-.sell{display:flex; gap:12px; align-items:flex-start}
-.sell .badge{flex:none; width:46px; height:46px; border-radius:13px; display:grid; place-items:center; background:linear-gradient(140deg,var(--fil),var(--cyan)); color:#0a0716; font-family:var(--display); font-weight:800; font-size:19px}
-.sell h3{margin:0; font-family:var(--display); font-weight:500; font-size:17px}
-.sell p{margin:3px 0 0; font-size:15px}
+.sell{display:flex; gap:14px; align-items:flex-start}
+.sell .badge{flex:none; width:48px; height:48px; border-radius:12px; display:grid; place-items:center; background:var(--rust); color:var(--paper); font-family:var(--display); font-size:22px}
+.sell h3{margin:0; font-family:var(--display); font-weight:400; font-size:19px; color:var(--paper); line-height:1.25}
+.sell p{margin:3px 0 0; font-size:15.5px; line-height:1.65}
 
-.listing{background:var(--void); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-line}
-.listing .t{font-weight:600; font-size:17px; margin-bottom:8px; white-space:normal}
-.listing .i{color:var(--muted); font-size:14.5px; margin-bottom:8px}
-.heads{border-left:3px solid var(--warn); padding:8px 12px; margin-top:12px; font-size:14px; background:rgba(255,209,102,.07); border-radius:0 10px 10px 0}
+.listing{background:var(--navy); border:1px solid var(--edge); border-radius:12px; padding:15px; white-space:pre-line}
+.listing .t{font-weight:700; font-size:18px; color:var(--paper); margin-bottom:8px; white-space:normal; line-height:1.4}
+.listing .i{color:var(--soft); font-size:15px; margin-bottom:8px; line-height:1.65}
+.heads{border-left:3px solid var(--gold); padding:9px 13px; margin-top:12px; font-size:14.5px; line-height:1.65; background:rgba(212,168,83,.08); border-radius:0 10px 10px 0}
+.heads .eye{display:block; margin-bottom:3px}
 .actions{display:grid; gap:10px; margin-top:14px}
-.fine{font-size:12.5px; color:var(--muted); margin:16px 0 0}
-.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,20px); background:var(--panel2); border:1px solid var(--cyan); padding:10px 16px; border-radius:12px; font-size:14px; opacity:0; transition:opacity .2s,transform .2s; z-index:10; pointer-events:none}
+.fine{font-size:12.5px; line-height:1.7; color:var(--faint); margin:20px 0 0; font-style:italic}
+.toast{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,20px); background:var(--void); border:1px solid var(--gold); color:var(--paper); padding:10px 16px; border-radius:12px; font-size:14px; opacity:0; transition:opacity .2s,transform .2s; z-index:10; pointer-events:none}
 .toast.on{opacity:1; transform:translate(-50%,0)}
 .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
-@media (prefers-reduced-motion: reduce){ .scan .fil{animation:none} .toast,.btn{transition:none} }
+
+
+/* splash: shown on every load and every reset */
+#splash{position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:24px; cursor:pointer;
+  background:radial-gradient(900px 600px at 50% 30%, #12263b 0%, transparent 65%), var(--navy); transition:opacity .7s ease, visibility .7s}
+#splash.hide{opacity:0; visibility:hidden; pointer-events:none}
+.sp-inner{text-align:center; width:100%; max-width:340px}
+.sp-badge{display:block; width:100%; max-width:300px; height:auto; margin:0 auto 18px; border-radius:22px; animation:arrive 1s ease-out both}
+.sp-title{font-size:11px; letter-spacing:.42em; animation:arrive 1s ease-out .5s both}
+.sp-thread{width:220px; margin:14px auto 10px}
+.sp-thread svg{display:block; width:100%; height:auto; overflow:visible}
+.sp-thread path{fill:none; stroke:var(--rust-hi); stroke-width:3; stroke-linecap:round; stroke-dasharray:1; animation:draw var(--sp-ms,2.4s) cubic-bezier(.3,.6,.3,1) both}
+.sp-thread path.g{stroke:var(--gold); stroke-width:1.5; animation-delay:.3s}
+.sp-line{font-style:italic; font-size:14.5px; color:var(--soft); margin:0 0 18px; animation:arrive 1s ease-out .9s both}
+.sp-copy{font-family:var(--ui); font-weight:500; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin:0}
+body.splashing{overflow:hidden}
+
+/* dividers + eyebrow stars */
+.divider{margin:2px 0 20px}
+.divider svg{display:block; width:100%; height:auto; overflow:visible}
+.divider .th{fill:none; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:0}
+body:not(.go) .divider .th{stroke-dashoffset:1}
+body.go .divider .th{animation:draw 2.2s cubic-bezier(.3,.6,.3,1) both}
+body.go .divider .th.a{animation-delay:.2s}
+.panel{position:relative; overflow:hidden}
+.panel::before{content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--rust),var(--gold) 55%,transparent)}
+.panel > .eye::before,.hero-eye::before{content:''; display:inline-block; width:9px; height:9px; margin-right:9px; background:var(--gold); clip-path:polygon(50% 0,59% 41%,100% 50%,59% 59%,50% 100%,41% 59%,0 50%,41% 41%)}
+.demo{display:none; margin:0 0 14px; padding:10px 14px; border:1px dashed var(--gold); border-radius:12px; font-size:13.5px; line-height:1.6; color:var(--cream); background:rgba(212,168,83,.07)}
+.demo b{font-family:var(--ui); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
+
+/* footer */
+.foot{text-align:center; margin-top:30px; padding-top:6px}
+.foot .glyph{width:44px; height:44px; border-radius:11px; display:block; margin:0 auto 10px}
+.foot .eye{letter-spacing:.34em; font-size:10px}
+.foot .tag{font-family:var(--ui); font-weight:500; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); margin:8px 0 0}
+.foot .copy{font-size:12.5px; color:var(--soft); margin:12px 0 0; line-height:1.6}
+.foot .legal{font-size:11.5px; color:var(--faint); margin:4px 0 0; font-style:italic; line-height:1.6}
+
+@media (prefers-reduced-motion: reduce){
+  .dot,.spark,.scene *,.btn.primary.pulse,.sp-badge,.sp-title,.sp-line,.sp-thread path,body.go .divider .th{animation:none !important}
+  body:not(.go) .divider .th{stroke-dashoffset:0}
+  .comet{display:none}
+  .toast,.btn{transition:none}
+}
 </style>
 </head>
 <body>
-<canvas id="web" aria-hidden="true"></canvas>
+<div id="splash" role="status" aria-label="Cosmic Filaments. Loading Must Sell Now."></div>
+<div id="sky" aria-hidden="true"><div class="comet"></div></div>
 <main class="wrap">
+  <p class="eye hero-eye">Pricing Matrix</p>
+  <h1>Must sell now!</h1>
+  <p class="lede">Snap a photo. We search what pieces like yours really sold for, then hand you <b>the price that moves it fast</b>, the best place to sell it, and a listing ready to paste. You can do this.</p>
 
-  <div class="mast">
-    <svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true">
-      <path d="M5 26 C 12 20, 14 12, 17 7 S 24 20, 29 9" fill="none" stroke="#7c5cff" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M5 26 C 14 27, 22 24, 29 9" fill="none" stroke="#5ee7ff" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>
-      <circle cx="5" cy="26" r="3" fill="#5ee7ff"/><circle cx="17" cy="7" r="3.4" fill="#ff4f8b"/><circle cx="29" cy="9" r="3" fill="#7c5cff"/>
-    </svg>
-    <span class="co">COSMIC FILAMENTS</span>
-  </div>
-  <h1>Must Sell NOW!</h1>
-  <p class="lede">Photo in. Sold-price research, the price that moves it fast, where to sell, and a listing ready to paste.</p>
+  <div class="divider" data-divider aria-hidden="true"></div>
 
   <section class="panel" id="capture">
+    <p class="eye">Show us the piece</p>
     <div class="drop" id="drop">
       <div class="btnrow">
-        <button class="btn" id="btnCam" type="button">Take photo</button>
+        <button class="btn" id="btnCam" type="button">Take a photo</button>
         <button class="btn" id="btnPick" type="button">Upload</button>
       </div>
       <input class="sr" id="inCam" type="file" accept="image/*" capture="environment" tabindex="-1">
       <input class="sr" id="inPick" type="file" accept="image/*" multiple tabindex="-1">
       <div class="thumbs" id="thumbs"></div>
     </div>
-    <input class="field" id="note" type="text" maxlength="300" placeholder="Anything you know? (optional)" aria-label="Optional note about the item">
-    <div class="field" id="passRow" style="padding:0; border:0; background:none">
-      <input class="field" id="pass" type="password" placeholder="Passcode" autocomplete="current-password" aria-label="Passcode" style="margin-top:0">
+    <input class="field" id="note" type="text" maxlength="300" placeholder="Anything you know about it? (optional)" aria-label="Optional note about the item">
+    <div id="passRow">
+      <input class="field" id="pass" type="password" placeholder="Passcode" autocomplete="current-password" aria-label="Passcode">
     </div>
     <div class="go">
       <button class="btn primary" id="btnGo" type="button" disabled>Price it to sell</button>
@@ -163,18 +237,14 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
   </section>
 
   <section class="panel scan" id="scan" aria-live="polite">
-    <svg viewBox="0 0 150 150" aria-hidden="true">
-      <circle cx="75" cy="75" r="62" fill="none" stroke="var(--line)" stroke-width="1"/>
-      <path class="fil" d="M20 100 C 50 40, 80 130, 130 50" fill="none" stroke="#7c5cff" stroke-width="3" stroke-linecap="round"/>
-      <path class="fil" d="M25 55 C 60 100, 90 20, 125 100" fill="none" stroke="#5ee7ff" stroke-width="3" stroke-linecap="round"/>
-      <path class="fil" d="M40 125 C 60 60, 100 90, 112 28" fill="none" stroke="#ff4f8b" stroke-width="3" stroke-linecap="round"/>
-    </svg>
+    <div class="art" id="scanArt" aria-hidden="true"></div>
     <div class="msg" id="scanMsg">Looking at your photo…</div>
     <div class="sub">Searching sold listings. About a minute.</div>
-    <button class="btn small ghost" id="btnStop" type="button">Cancel</button>
+    <button class="btn small" id="btnStop" type="button">Cancel</button>
   </section>
 
   <div id="result" aria-live="polite">
+    <p class="demo" id="demoNote"><b>Demo</b><br>This is a sample appraisal so you can see the layout. The live Netlify app searches real sold listings for your photo.</p>
     <section class="panel">
       <div class="top">
         <img id="rImg" alt="Your collectible">
@@ -183,37 +253,27 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
     </section>
 
     <section class="panel matrix" aria-label="Price matrix">
-      <div class="track">
-        <svg viewBox="0 0 600 54" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#7c5cff"/><stop offset=".5" stop-color="#ff4f8b"/><stop offset="1" stop-color="#5ee7ff"/></linearGradient>
-            <filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
-          </defs>
-          <path d="M50 30 C 150 4, 230 50, 300 28 S 460 8, 550 30" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-          <circle cx="300" cy="28" r="15" fill="#ff4f8b" opacity=".55" filter="url(#gl)"/>
-          <circle cx="50" cy="30" r="6" fill="#7c5cff"/><circle cx="300" cy="28" r="10" fill="#ff4f8b"/><circle cx="550" cy="30" r="6" fill="#5ee7ff"/>
-        </svg>
-      </div>
+      <div class="track" id="track" aria-hidden="true"></div>
       <div class="cols">
-        <div><div class="lab">Floor</div><div class="val" id="pLow"></div></div>
-        <div class="mid"><div class="lab">Must-sell price</div><div class="val" id="pQuick"></div><div class="sub2" id="pDays"></div></div>
-        <div><div class="lab">Ceiling</div><div class="val" id="pHigh"></div></div>
+        <div><p class="eye">Floor</p><div class="val" id="pLow"></div></div>
+        <div class="mid"><p class="eye">Must-sell price</p><div class="val" id="pQuick"></div><div class="sub2" id="pDays"></div></div>
+        <div><p class="eye">Ceiling</p><div class="val" id="pHigh"></div></div>
       </div>
       <p class="proof"><span class="chip" id="proof"></span></p>
     </section>
 
     <section class="panel" id="compsPanel">
-      <h2>Sold prices found</h2>
+      <p class="eye">What it sold for</p>
       <ul class="comps" id="comps"></ul>
     </section>
 
     <section class="panel">
-      <h2>Sell it here</h2>
+      <p class="eye">Where to sell it</p>
       <div class="sell"><div class="badge" id="platBadge"></div><div><h3 id="platName"></h3><p id="platWhy"></p><p class="sub2" id="platNet"></p></div></div>
     </section>
 
     <section class="panel">
-      <h2>Listing</h2>
+      <p class="eye">Your listing</p>
       <div class="listing"><div class="t" id="lTitle"></div><div class="i" id="lInfo"></div><div id="lDesc"></div></div>
       <div class="heads" id="heads" style="display:none"></div>
       <div class="actions">
@@ -222,10 +282,18 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
       </div>
     </section>
 
-    <div style="text-align:center; margin-top:14px"><button class="btn ghost" id="btnAgain" type="button">Price another piece</button></div>
+    <div style="text-align:center; margin-top:16px"><button class="btn small" id="btnAgain" type="button">Price another piece</button></div>
   </div>
 
-  <p class="fine">Estimates, not appraisals. Prices come from sold listings found by web search and an AI read of your photos, and can be wrong for rare, signed or reproduced items. Check the links before you commit.</p>
+  <p class="fine">These are estimates, not appraisals. We read your photos and search sold listings, and we can be wrong on rare, signed or reproduction pieces. Click the links before you commit.</p>
+  <div class="divider" data-divider aria-hidden="true" style="margin-top:26px"></div>
+  <footer class="foot">
+    <img class="glyph" src="/brand/glyph.png" width="44" height="44" alt="">
+    <p class="eye">cosmicfilaments.com</p>
+    <p class="tag">AI Workflow Maps &amp; ThinkTank</p>
+    <p class="copy">&copy; <span class="yr">2026</span> Cosmic Filaments. All rights reserved.</p>
+    <p class="legal">Must Sell NOW! and the Cosmic Filaments mark are the property of Cosmic Filaments.</p>
+  </footer>
 </main>
 <div class="toast" id="toast" role="status"></div>
 
@@ -234,27 +302,59 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
 (() => {
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state = { photos: [], result: null, polling: false };
+  const state = { photos: [], result: null };
   const MAX = 3;
+  const DEMO = false;
+  const BADGE_URL = '/brand/badge.png';
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
 
-  /* background filaments */
-  function drawWeb(){
-    const c = $('web'), dpr = Math.min(devicePixelRatio || 1, 2), w = c.clientWidth, h = c.clientHeight;
-    c.width = w * dpr; c.height = h * dpr;
-    const x = c.getContext('2d'); x.scale(dpr, dpr);
-    let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
-    const n = Math.round(w * h / 24000) + 12, pts = [];
-    for (let i = 0; i < n; i++) pts.push([rnd() * w, rnd() * h, rnd()]);
-    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
-      const dx = pts[i][0] - pts[j][0], dy = pts[i][1] - pts[j][1], d = Math.hypot(dx, dy);
-      if (d < 170) { x.strokeStyle = (pts[i][2] > .6 ? 'rgba(94,231,255,' : 'rgba(124,92,255,') + (.2 * (1 - d / 170)) + ')'; x.beginPath(); x.moveTo(pts[i][0], pts[i][1]); x.quadraticCurveTo((pts[i][0] + pts[j][0]) / 2 + dy * .12, (pts[i][1] + pts[j][1]) / 2 - dx * .12, pts[j][0], pts[j][1]); x.stroke(); }
-    }
-    for (const p of pts) { x.fillStyle = p[2] > .85 ? 'rgba(255,79,139,.7)' : 'rgba(167,159,208,.4)'; x.beginPath(); x.arc(p[0], p[1], p[2] > .85 ? 2.4 : 1.3, 0, 6.3); x.fill(); }
+  /* splash: the Cosmic Filaments badge, on every load and every reset */
+  const splash = $('splash'); let splashT = null;
+  function showSplash(ms, line) {
+    ms = REDUCE ? Math.min(ms, 1200) : ms;
+    clearTimeout(splashT);
+    document.body.classList.remove('go'); document.body.classList.add('splashing');
+    splash.style.setProperty('--sp-ms', (ms / 1000 - .2).toFixed(2) + 's');
+    splash.innerHTML = '<div class="sp-inner"><img class="sp-badge" src="/brand/badge.png" alt="Cosmic Filaments. AI Workflow Maps and ThinkTank. cosmicfilaments.com">' +
+      '<p class="eye sp-title">Must Sell Now!</p>' +
+      '<div class="sp-thread"><svg viewBox="0 0 300 20" aria-hidden="true"><path pathLength="1" d="M0 12 C 50 2, 90 20, 150 10 S 250 2, 300 10"/><path class="g" pathLength="1" d="M0 8 C 60 18, 100 0, 160 9 S 250 16, 300 7"/></svg></div>' +
+      '<p class="sp-line">' + (line || 'Warming up the matrix…') + '</p>' +
+      '<p class="sp-copy">&copy; ' + new Date().getFullYear() + ' Cosmic Filaments</p></div>';
+    splash.classList.remove('hide');
+    const done = () => { clearTimeout(splashT); splash.classList.add('hide'); document.body.classList.remove('splashing'); document.body.classList.add('go'); window.scrollTo(0, 0); };
+    splash.onclick = done; splashT = setTimeout(done, ms);
   }
-  drawWeb(); let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawWeb, 200); });
+  const dividerSVG = () => '<svg class="scene" viewBox="0 0 600 24"><path class="th b" pathLength="1" stroke="#8A3413" stroke-width="3" d="M0 14 C 120 22, 220 4, 300 12 S 500 22, 600 10"/><path class="th a" pathLength="1" stroke="#B5451B" stroke-width="2" d="M0 10 C 100 2, 200 22, 300 12 S 500 2, 600 14"/><path fill="#D4A853" d="M300 2 L303 9 L310 12 L303 15 L300 22 L297 15 L290 12 L297 9Z"/></svg>';
+  document.querySelectorAll('[data-divider]').forEach(d => d.innerHTML = dividerSVG());
+
+  /* sky: dots and four-point sparkles, staggered so no two blink in unison */
+  (function sky(){
+    const box = $('sky'); let s = 11; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    for (let i = 0; i < 34; i++) {
+      const spark = i % 6 === 0, e = document.createElement('div');
+      e.className = spark ? 'spark' : 'dot';
+      const sz = spark ? 8 + rnd() * 6 : 1.5 + rnd() * 1.5;
+      e.style.cssText = 'left:' + (rnd() * 100).toFixed(1) + '%;top:' + (rnd() * 100).toFixed(1) + '%;width:' + sz.toFixed(1) + 'px;height:' + sz.toFixed(1) + 'px;animation-delay:-' + (rnd() * 3).toFixed(2) + 's';
+      box.appendChild(e);
+    }
+  })();
+
+  /* the scene from the mark: threads draw on, then moon, star and ringed planet arrive */
+  const scene = () =>
+    '<svg class="scene" viewBox="0 0 600 150" role="presentation">' +
+    '<path class="th b" pathLength="1" stroke="#8A3413" stroke-width="7" d="M0 98 C 110 122, 200 54, 310 82 S 500 122, 600 94"/>' +
+    '<path class="th a" pathLength="1" stroke="#B5451B" stroke-width="5" d="M0 80 C 90 42, 170 112, 300 76 S 500 36, 600 72"/>' +
+    '<path class="th c" pathLength="1" stroke="#D0592B" stroke-width="2.5" d="M0 66 C 120 84, 230 38, 330 72 S 520 86, 600 62"/>' +
+    '<g class="arr moon"><g class="breathe"><circle cx="95" cy="84" r="23" fill="#E8D5A3"/><circle cx="87" cy="77" r="5" fill="#0D1B2A" opacity=".16"/></g></g>' +
+    '<g class="arr ring"><g class="breathe"><circle cx="505" cy="62" r="27" fill="#D0592B"/>' +
+    '<ellipse cx="505" cy="62" rx="42" ry="11" transform="rotate(-14 505 62)" fill="none" stroke="#D4A853" stroke-width="4"/></g></g>' +
+    '<path class="arr star" fill="#D4A853" d="M302 52 L307 71 L326 77 L307 83 L302 102 L297 83 L278 77 L297 71Z"/>' +
+    '</svg>';
+  $('scanArt').innerHTML = scene();
 
   const toast = m => { const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2000); };
-  const money = n => { n = Number(n); return !isFinite(n) ? '—' : n >= 100 ? '$' + Math.round(n).toLocaleString('en-US') : '$' + n.toFixed(2); };
+  const money = n => { n = Number(n); return !isFinite(n) ? '-' : n >= 100 ? '$' + Math.round(n).toLocaleString('en-US') : '$' + n.toFixed(2); };
   const slug = s => String(s || 'item').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'item';
   const setStatus = (m, err) => { const s = $('status'); s.textContent = m || ''; s.classList.toggle('err', !!err); };
   const store = { get: k => { try { return sessionStorage.getItem(k) || ''; } catch { return ''; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} } };
@@ -281,13 +381,17 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
       box.appendChild(d);
     });
   }
-  const refreshGo = () => { $('btnGo').disabled = !state.photos.length; };
+  /* the primary button gets one slow glow-breath the first time it comes alive */
+  function refreshGo() {
+    const b = $('btnGo'), was = b.disabled; b.disabled = !state.photos.length;
+    if (was && !b.disabled) { b.classList.add('pulse'); b.addEventListener('animationend', () => b.classList.remove('pulse'), { once: true }); }
+  }
   async function addFiles(list) {
     const files = [...list].filter(f => f.type.startsWith('image/'));
-    if (!files.length) { setStatus('That doesn’t look like a photo.', true); return; }
+    if (!files.length) { setStatus('That doesn’t look like a photo. Try another.', true); return; }
     setStatus('');
     for (const f of files) {
-      if (state.photos.length >= MAX) { toast('Max ' + MAX + ' photos'); break; }
+      if (state.photos.length >= MAX) { toast('Up to ' + MAX + ' photos'); break; }
       try { state.photos.push(await shrink(f)); } catch { setStatus('One photo couldn’t be read.', true); }
     }
     renderThumbs(); refreshGo();
@@ -302,19 +406,32 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
   drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
   $('pass').value = store.get('msn_pass');
 
+  const DEMO_RESULT = {item:{name:'Sample piece: Fenton Hobnail Opalescent Vase'}, condition:'Very good', confidence:'medium', soldCount:5,
+    prices:{low:24, quick:38, high:62, days:6},
+    comps:[{title:'Fenton blue opalescent hobnail vase, 8 in', source:'eBay', kind:'sold', price:41, url:'https://www.ebay.com'},
+           {title:'Vintage Fenton hobnail vase', source:'eBay', kind:'sold', price:36, url:'https://www.ebay.com'},
+           {title:'Fenton vase, ruffled rim', source:'Etsy', kind:'asking', price:58, url:'https://www.etsy.com'}],
+    platform:{name:'eBay', why:'Collectors search here by pattern name, and sold history backs your price.', fee:13},
+    listing:{title:'Fenton Blue Opalescent Hobnail Vase, 8 in, Vintage', info:['Maker: Fenton','Height: 8 inches','Condition: very good, no chips'], description:'A pretty blue opalescent hobnail vase from Fenton, a name collectors know. The glass glows when it catches the light and the rim is smooth. It is a good size for a windowsill or a shelf of vintage glass. Ships well packed.'},
+    headsUp:'Check the base for a Fenton mark before you list.'};
+
   /* run + poll */
-  const MSGS = ['Looking at your photo…', 'Searching sold listings…', 'Comparing sales…', 'Setting the must-sell price…', 'Writing the listing…'];
+  const MSGS = ['Looking at your photo…', 'Searching what it really sold for…', 'Comparing the sales…', 'Doing the math…', 'Writing your listing…'];
   let msgTimer = null, pollTimer = null, runToken = 0;
   function showScan(on) {
     $('scan').classList.toggle('on', on); $('capture').style.display = on ? 'none' : '';
     clearInterval(msgTimer);
-    if (on) { let i = 0; $('scanMsg').textContent = MSGS[0]; msgTimer = setInterval(() => { i = Math.min(i + 1, MSGS.length - 1); $('scanMsg').textContent = MSGS[i]; }, 9000); $('scan').scrollIntoView({ block: 'start' }); }
+    if (on) { let i = 0; $('scanArt').innerHTML = scene(); $('scanMsg').textContent = MSGS[0]; msgTimer = setInterval(() => { i = Math.min(i + 1, MSGS.length - 1); $('scanMsg').textContent = MSGS[i]; }, 9000); $('scan').scrollIntoView({ block: 'start' }); }
   }
   function fail(msg) { showScan(false); setStatus(msg, true); $('capture').scrollIntoView({ block: 'start' }); }
 
   async function run() {
     if (!state.photos.length) return;
     const token = ++runToken; setStatus(''); showScan(true);
+    if (DEMO) {
+      setTimeout(() => { if (token !== runToken) return; state.result = DEMO_RESULT; showScan(false); render(); }, 7000);
+      return;
+    }
     try {
       const r = await fetch('/.netlify/functions/start', {
         method: 'POST',
@@ -344,34 +461,37 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
     }, 2500);
   }
   $('btnGo').onclick = run;
-  $('btnStop').onclick = () => { runToken++; clearTimeout(pollTimer); showScan(false); setStatus('Cancelled.'); };
+  $('btnStop').onclick = () => { runToken++; clearTimeout(pollTimer); showScan(false); setStatus('Cancelled.'); showSplash(1900, 'Resetting the matrix…'); };
 
   /* render */
   function listingText() {
     const l = state.result.listing;
     return [l.title, '', ...l.info, '', l.description].join('\n').trim();
   }
+  const ID_LABEL = { high: 'Positive ID', medium: 'Likely match', low: 'Best guess' };
   function render() {
     const r = state.result, p = r.prices;
     $('rImg').src = state.photos[0].dataUrl;
     $('rName').textContent = r.item.name;
     const chips = [];
     if (r.condition) chips.push('<span class="chip">' + esc(r.condition) + '</span>');
-    chips.push('<span class="chip ' + (r.confidence === 'high' ? 'good' : r.confidence === 'low' ? 'warn' : '') + '">ID: ' + esc(r.confidence) + '</span>');
+    chips.push('<span class="chip ' + (r.confidence === 'high' ? 'good' : r.confidence === 'low' ? 'warn' : '') + '">' + esc(ID_LABEL[r.confidence] || 'Likely match') + '</span>');
     $('rChips').innerHTML = chips.join('');
+    $('track').innerHTML = scene();
     $('pLow').textContent = money(p.low); $('pQuick').textContent = money(p.quick); $('pHigh').textContent = money(p.high);
-    $('pDays').textContent = 'about ' + p.days + ' days';
+    $('pDays').textContent = 'about ' + p.days + ' days to sell';
     const pr = $('proof');
     if (r.soldCount >= 3) { pr.textContent = 'Backed by ' + r.soldCount + ' sold listings'; pr.className = 'chip good'; }
-    else if (r.comps.length) { pr.textContent = 'Only ' + r.soldCount + ' sold comps found. Treat as an estimate'; pr.className = 'chip warn'; }
-    else { pr.textContent = 'No comps found. AI estimate only'; pr.className = 'chip warn'; }
+    else if (r.comps.length) { pr.textContent = 'Only ' + r.soldCount + ' sold found. Treat as an estimate'; pr.className = 'chip warn'; }
+    else { pr.textContent = 'No sold listings found. AI estimate only'; pr.className = 'chip warn'; }
     $('compsPanel').style.display = r.comps.length ? '' : 'none';
     $('comps').innerHTML = r.comps.map(c => '<li><span><a href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer">' + esc(c.title || c.source || 'Listing') + '</a><br><span class="k">' + esc(c.source) + ' · ' + (c.kind === 'sold' ? 'sold' : 'asking price') + '</span></span><span class="p">' + money(c.price) + '</span></li>').join('');
     $('platBadge').textContent = r.platform.name.charAt(0).toUpperCase();
     $('platName').textContent = r.platform.name; $('platWhy').textContent = r.platform.why;
-    $('platNet').textContent = r.platform.fee ? 'After about ' + r.platform.fee + '% fees, the must-sell price nets roughly ' + money(p.quick * (1 - r.platform.fee / 100)) + ' before shipping.' : '';
+    $('platNet').textContent = r.platform.fee ? 'After about ' + r.platform.fee + '% in fees, the must-sell price nets roughly ' + money(p.quick * (1 - r.platform.fee / 100)) + ' before shipping.' : '';
     $('lTitle').textContent = r.listing.title; $('lInfo').textContent = r.listing.info.join('\n'); $('lDesc').textContent = r.listing.description;
-    const h = $('heads'); h.style.display = r.headsUp ? '' : 'none'; h.textContent = r.headsUp;
+    const h = $('heads'); h.style.display = r.headsUp ? '' : 'none'; h.innerHTML = r.headsUp ? '<span class="eye">Heads up</span>' + esc(r.headsUp) : '';
+    $('demoNote').style.display = DEMO ? 'block' : 'none';
     $('result').classList.add('on'); $('result').scrollIntoView({ block: 'start' });
   }
 
@@ -382,81 +502,112 @@ h2{font-family:var(--display); font-weight:500; font-size:14px; margin:0 0 10px}
     catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); toast('Listing copied ✓'); } catch { toast('Couldn’t copy'); } a.remove(); }
   };
 
-  /* one-page PDF */
+  /* one-page PDF, on navy, with the real badge */
   const ascii = s => String(s ?? '').replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-').replace(/[^\x20-\x7E\n]/g, '');
-  $('btnPdf').onclick = () => {
+  let badgeData = null;
+  const loadBadge = async () => {
+    if (badgeData !== null) return badgeData;
+    if (BADGE_URL.startsWith('data:')) { badgeData = BADGE_URL; return badgeData; }
+    try {
+      const b = await (await fetch('/brand/badge.png')).blob();
+      badgeData = await new Promise((res, rej) => { const f = new FileReader(); f.onload = () => res(f.result); f.onerror = rej; f.readAsDataURL(b); });
+    } catch { badgeData = ''; }
+    return badgeData;
+  };
+  $('btnPdf').onclick = async () => {
     if (!window.jspdf) { toast('PDF tool didn’t load. Use Copy listing.'); return; }
     try {
       const { jsPDF } = window.jspdf, doc = new jsPDF({ unit: 'pt', format: 'letter' });
+      const badge = await loadBadge();
       const r = state.result, p = r.prices, ph = state.photos[0];
       const W = 612, H = 792, M = 40, CW = W - M * 2;
+      const NAVY = [13, 27, 42], VOID = [7, 16, 25], CREAM = [232, 213, 163], PAPER = [240, 230, 200], RUST = [181, 69, 27], GOLD = [212, 168, 83], SOFT = [190, 175, 135], EDGE = [52, 55, 53];
+      const fill = c => doc.setFillColor(c[0], c[1], c[2]), ink = c => doc.setTextColor(c[0], c[1], c[2]);
+      const track = n => { if (doc.setCharSpace) doc.setCharSpace(n); };
       const wrap = (t, w, size) => { doc.setFontSize(size); return doc.splitTextToSize(ascii(t), w); };
+      const label = (t, x, y, c = GOLD, size = 8.5, right = false) => { doc.setFont('helvetica', 'bold'); doc.setFontSize(size); ink(c); if (right) x -= doc.getTextWidth(t) + t.length * 1.6; track(1.6); doc.text(t, x, y); track(0); };
 
-      // header
-      doc.setFillColor(12, 8, 30); doc.rect(0, 0, W, 74, 'F'); doc.setFillColor(255, 79, 139); doc.rect(0, 74, W, 3, 'F');
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(26); doc.setTextColor(242, 238, 255); doc.text('MUST SELL NOW!', M, 46);
-      doc.setFontSize(8.5); doc.setTextColor(94, 231, 255); doc.text('COSMIC FILAMENTS  |  PRICING MATRIX', M, 62);
-      doc.setFont('helvetica', 'normal'); doc.setTextColor(167, 159, 208);
-      doc.text(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }), W - M, 62, { align: 'right' });
+      // page: Deep Space Navy, always
+      fill(NAVY); doc.rect(0, 0, W, H, 'F');
 
-      // photo + label
-      let y = 98; const bw = 292, bh = 262, k = Math.min(bw / ph.w, bh / ph.h), iw = ph.w * k, ih = ph.h * k;
+      // header: the full badge (never separated), title beside it
+      if (badge) doc.addImage(badge, 'PNG', M, 26, 82, 82);
+      const hx = badge ? M + 100 : M;
+      label('PRICING MATRIX', hx, 54);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(30); ink(PAPER); doc.text('MUST SELL NOW!', hx, 86);
+      doc.setFont('times', 'italic'); doc.setFontSize(10); ink(SOFT);
+      doc.text(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }), W - M, 86, { align: 'right' });
+      fill(RUST); doc.rect(M, 120, CW, 2.5, 'F');
+
+      // photo + label strip
+      let y = 140; const bw = 292, bh = 258, k = Math.min(bw / ph.w, bh / ph.h), iw = ph.w * k, ih = ph.h * k;
       doc.addImage(ph.dataUrl, 'JPEG', M, y, iw, ih);
-      doc.setFillColor(36, 26, 85); doc.rect(M, y + ih, iw, 22, 'F');
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.setTextColor(255, 255, 255);
+      fill(RUST); doc.rect(M, y + ih, iw, 22, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); ink(PAPER);
       const lab = ascii('PHOTO: ' + r.item.name + (r.condition ? '  |  ' + r.condition : ''));
       doc.text(doc.splitTextToSize(lab, iw - 14)[0], M + 7, y + ih + 14.5);
 
-      // prices
-      const rx = M + bw + 20, rw = W - M - rx; let ry = y;
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('FLOOR', rx, ry + 10);
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(20, 14, 40); doc.text(money(p.low), rx, ry + 32); ry += 46;
-      doc.setFillColor(255, 79, 139); doc.roundedRect(rx, ry, rw, 70, 8, 8, 'F');
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(255, 255, 255); doc.text('MUST-SELL PRICE', rx + rw / 2, ry + 17, { align: 'center' });
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(28); doc.text(money(p.quick), rx + rw / 2, ry + 48, { align: 'center' });
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.text('about ' + p.days + ' days', rx + rw / 2, ry + 63, { align: 'center' }); ry += 84;
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('CEILING', rx, ry + 10);
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(20, 14, 40); doc.text(money(p.high), rx, ry + 32); ry += 50;
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(93, 84, 144); doc.text('SELL ON', rx, ry);
-      doc.setFontSize(12); doc.setTextColor(20, 14, 40); doc.text(ascii(r.platform.name), rx, ry + 15);
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(60, 52, 100);
-      wrap(r.platform.why, rw, 9).slice(0, 4).forEach((l, i) => doc.text(l, rx, ry + 29 + i * 11));
+      // price matrix
+      const rx = M + bw + 22, rw = W - M - rx; let ry = y;
+      label('FLOOR', rx, ry + 10);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(21); ink(PAPER); doc.text(money(p.low), rx, ry + 34); ry += 50;
+      fill(RUST); doc.roundedRect(rx, ry, rw, 76, 8, 8, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); ink(PAPER); track(1.4); doc.text('MUST-SELL PRICE', rx + rw / 2, ry + 18, { align: 'center' }); track(0);
+      doc.setFontSize(30); doc.text(money(p.quick), rx + rw / 2, ry + 50, { align: 'center' });
+      doc.setFont('times', 'italic'); doc.setFontSize(10); doc.text('about ' + p.days + ' days to sell', rx + rw / 2, ry + 66, { align: 'center' }); ry += 92;
+      label('CEILING', rx, ry + 10);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(21); ink(PAPER); doc.text(money(p.high), rx, ry + 34); ry += 56;
+      label('SELL ON', rx, ry);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(13); ink(PAPER); doc.text(ascii(r.platform.name), rx, ry + 16);
+      doc.setFont('times', 'normal'); ink(CREAM);
+      wrap(r.platform.why, rw, 10).slice(0, 4).forEach((l, i) => doc.text(l, rx, ry + 30 + i * 12.5));
 
-      // listing box (plain text, selectable, paste-ready)
-      y += Math.max(ih + 22, 260) + 22;
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(90, 61, 240); doc.text('LISTING  -  COPY AND PASTE', M, y); y += 8;
-      const tl = wrap(r.listing.title, CW - 28, 14), il = r.listing.info.flatMap(s => wrap(s, CW - 28, 10.5)), dl = wrap(r.listing.description, CW - 28, 10.5);
-      const boxH = 18 + tl.length * 18 + 6 + il.length * 14 + 8 + dl.length * 14 + 12;
-      doc.setDrawColor(124, 92, 255); doc.setLineWidth(1); doc.setFillColor(247, 245, 255); doc.roundedRect(M, y, CW, boxH, 8, 8, 'FD');
-      let ly = y + 24; doc.setTextColor(20, 14, 40);
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(14); tl.forEach(l => { doc.text(l, M + 14, ly); ly += 18; }); ly += 2;
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(10.5); doc.setTextColor(70, 62, 110); il.forEach(l => { doc.text(l, M + 14, ly); ly += 14; }); ly += 8;
-      doc.setTextColor(20, 14, 40); dl.forEach(l => { doc.text(l, M + 14, ly); ly += 14; });
-      y += boxH + 18;
+      // listing: recessed panel, plain selectable text
+      y += Math.max(ih + 22, 258) + 26;
+      label('YOUR LISTING  -  COPY AND PASTE', M, y); y += 9;
+      const tl = wrap(r.listing.title, CW - 28, 14.5), il = r.listing.info.flatMap(s => wrap(s, CW - 28, 11)), dl = wrap(r.listing.description, CW - 28, 11);
+      const boxH = 18 + tl.length * 19 + 6 + il.length * 14.5 + 8 + dl.length * 14.5 + 12;
+      fill(VOID); doc.setDrawColor(EDGE[0], EDGE[1], EDGE[2]); doc.setLineWidth(1); doc.roundedRect(M, y, CW, boxH, 8, 8, 'FD');
+      let ly = y + 25;
+      doc.setFont('times', 'bold'); doc.setFontSize(14.5); ink(PAPER); tl.forEach(l => { doc.text(l, M + 14, ly); ly += 19; }); ly += 2;
+      doc.setFont('times', 'normal'); doc.setFontSize(11); ink(SOFT); il.forEach(l => { doc.text(l, M + 14, ly); ly += 14.5; }); ly += 8;
+      ink(CREAM); dl.forEach(l => { doc.text(l, M + 14, ly); ly += 14.5; });
+      y += boxH + 20;
 
-      // price evidence
+      // price evidence: linked, so you can check the work
       if (r.comps.length) {
-        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(90, 61, 240); doc.text('PRICE EVIDENCE', M, y); y += 13;
-        doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+        label('WHAT IT SOLD FOR', M, y); y += 14;
+        doc.setFont('times', 'normal'); doc.setFontSize(10);
         r.comps.slice(0, 4).forEach(c => {
-          if (y > H - 46) return;
+          if (y > H - 50) return;
           const line = ascii(money(c.price) + (c.kind === 'sold' ? ' sold' : ' asking') + '  -  ' + (c.source || '') + '  -  ' + c.title);
-          doc.setTextColor(10, 143, 176); doc.textWithLink(doc.splitTextToSize(line, CW)[0], M, y, { url: c.url }); y += 12.5;
+          ink(GOLD); doc.textWithLink(doc.splitTextToSize(line, CW)[0], M, y, { url: c.url }); y += 13;
         });
       }
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(120, 112, 160);
-      doc.text('Estimate based on web search of sold listings, not a formal appraisal. Cosmic Filaments | Must Sell NOW!', M, H - 22);
 
-      const blob = doc.output('blob'), url = URL.createObjectURL(blob), a = document.createElement('a');
-      a.href = url; a.download = 'must-sell-now-' + slug(r.item.name) + '.pdf'; document.body.appendChild(a); a.click(); a.remove();
+      // footer
+      fill(RUST); doc.rect(M, H - 40, CW, 1, 'F');
+      doc.setFont('times', 'italic'); doc.setFontSize(8.5); ink(SOFT);
+      doc.text('An estimate from sold listings found by web search, not a formal appraisal.', M, H - 28);
+      doc.text('\u00A9 ' + new Date().getFullYear() + ' Cosmic Filaments. All rights reserved.', M, H - 16);
+      label('COSMICFILAMENTS.COM', W - M, H - 16, GOLD, 7.5, true);
+
+      const blob = doc.output('blob'), fname = 'must-sell-now-' + slug(r.item.name) + '.pdf';
+      const dlCap = (window.claude && claude.use) ? await claude.use('downloads') : null;
+      if (dlCap) { try { await dlCap.save({ filename: fname, data: blob }); toast('PDF saved ✓'); } catch (e) { if (!e || e.code !== 'declined') toast('PDF failed. Use Copy listing.'); } return; }
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = fname; document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 4000); toast('PDF saved ✓');
     } catch (e) { toast('PDF failed. Use Copy listing.'); }
   };
 
   $('btnAgain').onclick = () => {
     state.photos = []; state.result = null; renderThumbs(); $('note').value = ''; setStatus(''); refreshGo();
-    $('result').classList.remove('on'); $('capture').style.display = ''; $('capture').scrollIntoView({ block: 'start' });
+    $('result').classList.remove('on'); $('capture').style.display = ''; window.scrollTo(0, 0);
+    showSplash(1900, 'Resetting the matrix…');
   };
+
+  showSplash(2800);
 })();
 </script>
 </body>
